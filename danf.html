@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Extrair Números</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      color: #111;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+
+    button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 14px;
+      font-size: 1rem;
+      background-color: #2c89e8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #1e6fb8;
+    }
+
+    .resultado {
+      margin-top: 15px;
+      font-size: 1.1rem;
+      background-color: #eef1f5;
+      padding: 12px;
+      border-radius: 6px;
+      word-break: break-word;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .resultado span {
+      flex-grow: 1;
+      margin-right: 10px;
+    }
+
+    .copy-btn {
+      background-color: #4CAF50;
+    }
+
+    .copy-btn.copiado {
+      background-color: #357a38 !important;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #121212;
+        color: #eee;
+      }
+
+      textarea {
+        background-color: #1e1e1e;
+        color: #eee;
+        border: 1px solid #444;
+      }
+
+      .resultado {
+        background-color: #1e1e1e;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Extrair apenas os números</h1>
+  <textarea id="entrada" rows="4" placeholder="Cole aqui seu texto com números misturados..."></textarea>
+  <button onclick="extrairNumeros()">Extrair</button>
+
+  <div class="resultado" id="resultado" style="display:none;">
+    <span id="saida"></span>
+    <button class="copy-btn" id="copyBtn" onclick="copiarTexto()">Copiar</button>
+  </div>
+
+  <script>
+    function extrairNumeros() {
+      const entrada = document.getElementById('entrada').value;
+      // não sei como funciona só sei que funciona
+      const numeros = entrada.replace(/\D+/g, '');
+      document.getElementById('saida').textContent = numeros || '(nenhum número encontrado)';
+      document.getElementById('resultado').style.display = 'flex';
+
+      // resetar botão de copiar
+      const copyBtn = document.getElementById('copyBtn');
+      copyBtn.textContent = 'Copiar';
+      copyBtn.classList.remove('copiado');
+    }
+
+    function copiarTexto() {
+      const texto = document.getElementById('saida').textContent;
+      const btn = document.getElementById('copyBtn');
+      navigator.clipboard.writeText(texto).then(() => {
+        btn.textContent = 'Copiado!';
+        btn.classList.add('copiado');
+        setTimeout(() => {
+          btn.textContent = 'Copiar';
+          btn.classList.remove('copiado');
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
